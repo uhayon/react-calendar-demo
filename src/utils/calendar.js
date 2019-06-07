@@ -12,16 +12,19 @@ export const daysNames = {
 
 export const getMonthWeeks = ({ month, year }) => {
   const daysRange = [];
-  let firstDayOfRange = moment(new Date(year, month, 1, 0, 0, 0));
-  let lastDayOfRange = firstDayOfRange.clone().add(1, 'month').subtract(1, 'days');
+  let currentDate = moment(new Date(year, month, 1, 0, 0, 0));
+  let lastDayOfRange = currentDate.clone().add(1, 'month').subtract(1, 'days');
 
-  while (firstDayOfRange.day() > 0) firstDayOfRange.subtract(1, 'days');
+  while (currentDate.day() > 0) currentDate.subtract(1, 'days');
   
   while (lastDayOfRange.day() < 6) lastDayOfRange.add(1, 'days');
 
-  while (firstDayOfRange.diff(lastDayOfRange, 'days') <= 0) {
-    daysRange.push(firstDayOfRange);
-    firstDayOfRange.add(1, 'days');
+  while (currentDate.diff(lastDayOfRange, 'days') <= 0) {
+    daysRange.push({
+      date: currentDate.clone(),
+      isFromCurrentMonth: currentDate.month() === month
+    });
+    currentDate.add(1, 'days');
   };
 
   return _.chunk(daysRange, 7);
