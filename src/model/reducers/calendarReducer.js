@@ -1,21 +1,21 @@
+import { today, getNextMonth, getPreviousMonth } from '../../utils/calendar';
 import {
-  CHANGE_MONTH,
-  CHANGE_YEAR
+  SET_NEXT_MONTH,
+  SET_PREVIOUS_MONTH
 } from '../constants';
 
-const currentDate = new Date();
 const initialState = {
-  currentDate,
-  selctedMonth: currentDate.getMonth(),
-  selectedYear: currentDate.getFullYear()
+  today,
+  selectedMonth: today.month(),
+  selectedYear: today.year()
 };
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case CHANGE_MONTH:
-      return { ...state, selctedMonth: action.payload };
-    case CHANGE_YEAR:
-      return { ...state, selectedYear: action.payload };
+    case SET_NEXT_MONTH:
+      return { ...state, ...getNextMonth({ month: state.selectedMonth, year: state.selectedYear }) };
+    case SET_PREVIOUS_MONTH:
+      return { ...state, ...getPreviousMonth({ month: state.selectedMonth, year: state.selectedYear }) };
     default:
       return state;
   }

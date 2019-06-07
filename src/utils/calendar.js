@@ -1,8 +1,7 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-export const today = new Date();
-
+export const today = moment(new Date());
 
 export const months = moment.months();
 
@@ -11,13 +10,9 @@ export const daysNames = {
   fullNames: moment.weekdays()
 }
 
-const getMomentDate = ({ month, year, day = 1 }) => {
-  return moment(new Date(year, month, day, 0, 0, 0));
-}
-
 export const getMonthWeeks = ({ month, year }) => {
   const daysRange = [];
-  let firstDayOfRange = getMomentDate({ month, year });
+  let firstDayOfRange = moment(new Date(year, month, 1, 0, 0, 0));
   let lastDayOfRange = firstDayOfRange.clone().add(1, 'month').subtract(1, 'days');
 
   while (firstDayOfRange.day() > 0) firstDayOfRange.subtract(1, 'days');
@@ -30,4 +25,12 @@ export const getMonthWeeks = ({ month, year }) => {
   };
 
   return _.chunk(daysRange, 7);
+}
+
+export const getPreviousMonth = ({ month, year }) => {
+  return month > 0 ? { selectedMonth: --month, selectedYear: year } : { selectedMonth: 11, selectedYear: --year } ;
+}
+
+export const getNextMonth = ({ month, year }) => {
+  return month < 11 ? { selectedMonth: ++month, selectedYear: year } : { selectedMonth: 0, selectedYear: ++year } ;
 }

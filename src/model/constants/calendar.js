@@ -1,2 +1,2 @@
-export const CHANGE_MONTH = 'CHANGE_MONTH';
-export const CHANGE_YEAR = 'CHANGE_YEAR';
+export const SET_PREVIOUS_MONTH = 'SET_PREVIOUS_MONTH';
+export const SET_NEXT_MONTH = 'SET_NEXT_MONTH';
