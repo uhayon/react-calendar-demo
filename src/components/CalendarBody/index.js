@@ -1,17 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getMonthWeeks } from '../../utils/calendar';
+import { getMonthWeeks, daysNames } from '../../utils/calendar';
+import { useWindowWidthSmall } from '../customHooks';
 
 import CalendarWeekRow from './CalendarWeekRow';
 import styles from './CalendarBody.module.scss';
 
 const CalendarBody = ({ weeks, reminders }) => {
+
+  const daysTitles = useWindowWidthSmall() ? daysNames.shortNames : daysNames.fullNames;
+
   return (
     <div className={styles.calendarBody}>
-      {
-        weeks.map((week, weekNumber) => <CalendarWeekRow key={weekNumber} week={week} reminders={reminders} />)
-      }
+      <div className={styles.calendarDaysTitleContainer}>
+        {
+          daysTitles.map(day => <div className={styles.dayTitle} key={day}>{day}</div>)
+        }
+      </div>
+      <div className={styles.calendarWeeksContainer}>
+        {
+          weeks.map((week, weekNumber) => <CalendarWeekRow key={weekNumber} week={week} reminders={reminders} />)
+        }
+      </div>
     </div>
   );
 };

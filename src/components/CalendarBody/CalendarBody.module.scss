@@ -1,16 +1,35 @@
 .calendarBody {
     flex: 1 1 auto;
-    display: grid;
-    grid-gap: 1em;
-    .calendarWeekRow {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+    background-color: #000;
+    .calendarDaysTitleContainer {
+        flex: 0 1 auto;
         display: grid;
-        grid-gap: 1em;
+        grid-gap: 0.25em;
         grid-template-columns: repeat(7, 1fr);
-
-        .calendarItem {
-            &.inactive {
-                color: gray;
-                background-color: lightgray;
+        .dayTitle {
+            background-color: #fff;
+            text-align: center;
+        }
+    }
+    .calendarWeeksContainer {
+        flex: 1 1 auto;
+        display: grid;
+        grid-gap: 0.25em;
+        margin-top: 0.25em;
+        .calendarWeekRow {
+            display: grid;
+            grid-gap: 0.25em;
+            grid-template-columns: repeat(7, 1fr);
+    
+            .calendarItem {
+                background-color: #fff;
+                &.inactive {
+                    color: gray;
+                    background-color: lightgray;
+                }
             }
         }
     }
