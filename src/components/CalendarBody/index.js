@@ -7,7 +7,7 @@ import { useWindowWidthSmall } from '../customHooks';
 import CalendarWeekRow from './CalendarWeekRow';
 import styles from './CalendarBody.module.scss';
 
-const CalendarBody = ({ weeks, reminders }) => {
+const CalendarBody = ({ weeks }) => {
 
   const daysTitles = useWindowWidthSmall() ? daysNames.shortNames : daysNames.fullNames;
 
@@ -20,18 +20,17 @@ const CalendarBody = ({ weeks, reminders }) => {
       </div>
       <div className={styles.calendarWeeksContainer}>
         {
-          weeks.map((week, weekNumber) => <CalendarWeekRow key={weekNumber} week={week} reminders={reminders} />)
+          weeks.map((week, weekNumber) => <CalendarWeekRow key={weekNumber} week={week} />)
         }
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ calendar, reminders }) => {
+const mapStateToProps = ({ calendar }) => {
   const { selectedMonth, selectedYear} = calendar;
   return {
-    weeks: getMonthWeeks({ month: selectedMonth, year: selectedYear }),
-    reminders: reminders[selectedYear] && reminders[selectedYear][selectedMonth] ? reminders[selectedYear][selectedMonth] : []
+    weeks: getMonthWeeks({ month: selectedMonth, year: selectedYear })
   };
 }
 

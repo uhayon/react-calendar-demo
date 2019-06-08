@@ -1,7 +1,7 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-export const today = moment(new Date());
+export const today = moment(new Date()).hours(0).minutes(0).seconds(0).milliseconds(0);
 
 export const months = moment.months();
 

@@ -1,0 +1,32 @@
+.modalContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal {
+        padding: 1em;
+        background-color: #fff;
+        border: 1px solid #000;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .closeButton {
+            width: auto;
+            border: none;
+            cursor: pointer;
+            &:hover {
+                background-color: #bdc3c7;
+                color: #34495e;
+            }
+        }
+    }
+}

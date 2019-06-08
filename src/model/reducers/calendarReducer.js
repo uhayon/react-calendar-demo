@@ -5,7 +5,6 @@ import {
 } from '../constants';
 
 const initialState = {
-  today,
   selectedMonth: today.month(),
   selectedYear: today.year()
 };

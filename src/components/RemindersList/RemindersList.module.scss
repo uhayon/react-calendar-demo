@@ -1,0 +1,17 @@
+.remindersList {
+    display: flex;
+    flex-direction: column;
+
+    .addButton {
+        align-self: flex-end;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background-color: #2980b9;
+        color: #fff;
+        font: bold 2em 'Monstserrat';
+        height: 2em;
+        width: 2em;
+        border-radius: 50%;
+    }
+}
