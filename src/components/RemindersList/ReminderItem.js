@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faMapMarkerAlt, faStickyNote } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faMapMarkerAlt, faStickyNote, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '../Modal';
 import ReminderForm from '../ReminderForm';
@@ -20,7 +20,7 @@ class ReminderItem extends React.Component {
   }
 
   render() {
-    const { text, color, time, city, date } = this.props.reminder;
+    const { text, color, time, city, date, forecast } = this.props.reminder;
 
     return (
       <>
@@ -36,6 +36,10 @@ class ReminderItem extends React.Component {
           <p>
             <FontAwesomeIcon icon={faMapMarkerAlt} />
             <span>{city}</span>
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faChartBar} />
+            <span>{forecast !== '' ? forecast : 'No forecast available'}</span>
           </p>
         </div>
         {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Field from './Field';
 import { addReminder, editReminder, removeReminder } from '../../model/actions/index';
-import { reminderTimes } from '../../utils/reminders';
+import { reminderTimes, searchForecast } from '../../utils/reminders';
 import colors from './colors.json';
 import styles from './ReminderForm.module.scss';
 
@@ -58,15 +58,16 @@ class ReminderForm extends React.Component {
         color: false,
         city: false
       }
-    }, () => {
+    }, async () => {
       if (this.fieldsValid()) {
         const { isCreation, addReminder, editReminder, removeReminder, onConfirmSuccess } = this.props;
-  
+        const forecast = await searchForecast(this.state.formValues.city);
+
         if (isCreation) {
-          addReminder(this.state.formValues);
+          addReminder({...this.state.formValues, forecast});
         } else {
           removeReminder(this.props.originalReminder);
-          editReminder(this.state.formValues);
+          editReminder({...this.state.formValues, forecast});
         }
         onConfirmSuccess();
       }

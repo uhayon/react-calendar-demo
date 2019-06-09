@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { getForecast } from '../api/openWeatherMap';
 
 const _reminderTimes = () => {
   const times = [];
@@ -20,4 +21,9 @@ export const sortReminders = reminders => {
       return orderedReminders;
     }, []
   );
+}
+
+export const searchForecast = async city => {
+  const response = await getForecast(city);
+  return response;
 }
