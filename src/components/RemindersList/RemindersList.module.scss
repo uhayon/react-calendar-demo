@@ -1,0 +1,17 @@
+.remindersList {
+    overflow-y: scroll;
+    .reminderItem {
+        color: #fff;
+        padding: 1em;
+        margin: 1em;
+        cursor: pointer;
+        overflow: scroll;
+        p {
+            margin: 0;
+            white-space: nowrap;
+            span {
+                margin: 0 0.5em;
+            }
+        }
+    }
+}

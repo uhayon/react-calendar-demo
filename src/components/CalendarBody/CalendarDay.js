@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { today } from '../../utils/calendar';
+import { sortReminders } from '../../utils/reminders';
 import Modal from '../Modal';
 import DayRemindersModal from '../DayRemindersModal';
-
-import styles from './CalendarBody.module.scss';
+import CalendarDayContent from './CalendarDayContent'
 
 class CalendarDay extends React.Component {
   state = { modalOpen: false };
@@ -23,13 +22,16 @@ class CalendarDay extends React.Component {
   }
 
   render() {
-    const { date, isFromCurrentMonth } = this.props;
+    const { date, isFromCurrentMonth, reminders } = this.props;
 
     return (
       <>
-        <div onClick={this.onDayClick} className={`${styles.calendarItem} ${!isFromCurrentMonth ? styles.inactive : ''}`}>
-          <div className={`${styles.dayNumber} ${date.diff(today, 'days') === 0 ? styles.today : ''}`}>{date.date()}</div>
-        </div>
+        <CalendarDayContent 
+          onDayClick={this.onDayClick}
+          isFromCurrentMonth={isFromCurrentMonth}
+          reminders={reminders}
+          date={date}
+        />
         {
           this.state.modalOpen && 
           <Modal onDismiss={this.closeModal} showOverlay>
@@ -46,8 +48,10 @@ const mapStateToProps = (state, ownProps) => {
   const { date } = ownProps;
   const thisDayHasReminders = reminders[date.year()] && reminders[date.year()][date.month()] && reminders[date.year()][date.month()][date.date()];
 
+  const foundReminders = thisDayHasReminders ? reminders[date.year()][date.month()][date.date()] : {};
+
   return {
-    reminders: thisDayHasReminders ? reminders[date.year()][date.month()][date.date()] : []
+    reminders: sortReminders(foundReminders)
   }
 };
 

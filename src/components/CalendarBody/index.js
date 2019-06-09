@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getMonthWeeks, daysNames } from '../../utils/calendar';
-import { useWindowWidthSmall } from '../customHooks';
+import { useWindowWidthSmall } from '../../customHooks';
 
 import CalendarWeekRow from './CalendarWeekRow';
 import styles from './CalendarBody.module.scss';

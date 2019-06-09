@@ -1,15 +1,17 @@
 import React from 'react';
 import ReminderItem from './ReminderItem';
 
+import styles from './RemindersList.module.scss';
+
 const RemindersList = ({ reminders }) => {
   if (!reminders.length) {
-    return <p>No reminders for this day</p>;
+    return null;
   };
 
   return (
-    <div>
+    <div className={styles.remindersList}>
       {
-        reminders.map(reminder => <ReminderItem {...reminder} />)
+        reminders.map(reminder => <ReminderItem key={reminder.time} reminder={reminder} />)
       }
     </div>
   )

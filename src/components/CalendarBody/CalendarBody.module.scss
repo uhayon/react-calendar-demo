@@ -21,6 +21,7 @@
     .calendarWeeksContainer {
         flex: 1 1 auto;
         display: grid;
+        grid-template-rows: repeat(auto-fit, minmax(1px, 1fr));
         grid-gap: 0.25em;
         margin-top: 0.25em;
         .calendarWeekRow {
@@ -31,6 +32,9 @@
             .calendarItem {
                 background-color: #fff;
                 cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                overflow-y: scroll;
                 &:first-child, &:last-child {
                     background: #ecf0f1 !important;
                 }
@@ -47,6 +51,8 @@
                 }
                 .dayNumber {
                     padding: 5px;
+                    display: flex;
+                    justify-content: space-between;
                 }
             }
         }

@@ -1,6 +1,8 @@
+import _ from 'lodash';
 import {
   ADD_REMINDER,
-  EDIT_REMINDER
+  EDIT_REMINDER,
+  REMOVE_REMINDER
 } from '../constants';
 
 const initalState = {};
@@ -8,19 +10,19 @@ const initalState = {};
 export default (state = initalState, action) => {
   switch(action.type) {
     case ADD_REMINDER:
-      const selectedYearReminders = { ...state[action.payload.date.year()] } || {};
-      const selectedMonthReminders = { ...selectedYearReminders[action.payload.date.month()] } || {};
-      const selectedDayReminders = selectedMonthReminders[action.payload.date.date()] || {};
+      const selectedYearRemindersAdd = { ...state[action.payload.date.year()] } || {};
+      const selectedMonthRemindersAdd = { ...selectedYearRemindersAdd[action.payload.date.month()] } || {};
+      const selectedDayRemindersAdd = selectedMonthRemindersAdd[action.payload.date.date()] || {};
 
-      selectedDayReminders[action.payload.time] = action.payload;
+      selectedDayRemindersAdd[action.payload.time] = action.payload;
 
       return { 
         ...state, 
         [action.payload.date.year()]: {
-          ...selectedYearReminders,
+          ...selectedYearRemindersAdd,
           [action.payload.date.month()]: {
-            ...selectedMonthReminders,
-            [action.payload.date.date()]: selectedDayReminders
+            ...selectedMonthRemindersAdd,
+            [action.payload.date.date()]: selectedDayRemindersAdd
           }
         }
       };
@@ -38,6 +40,22 @@ export default (state = initalState, action) => {
           }
         }
       }
+    case REMOVE_REMINDER:
+        const selectedYearRemindersEdit = { ...state[action.payload.date.year()] };
+        const selectedMonthRemindersEdit = { ...selectedYearRemindersEdit[action.payload.date.month()] };
+        const selectedDayRemindersEdit = { ...selectedMonthRemindersEdit[action.payload.date.date()] };
+
+        return {
+          ...state,
+          [action.payload.date.year()]: {
+            ...selectedYearRemindersEdit,
+            [action.payload.date.month()]: {
+              ...selectedMonthRemindersEdit,
+              [action.payload.date.date()]: _.omit(selectedDayRemindersEdit, action.payload.time)
+            }
+          }
+        }
+
     default:
       return state;
   }
