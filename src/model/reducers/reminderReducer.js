@@ -1,5 +1,6 @@
 import {
-  ADD_REMINDER
+  ADD_REMINDER,
+  EDIT_REMINDER
 } from '../constants';
 
 const initalState = {};
@@ -7,23 +8,36 @@ const initalState = {};
 export default (state = initalState, action) => {
   switch(action.type) {
     case ADD_REMINDER:
-      const { date, reminder } = action.payload;
-      const selectedYearReminders = { ...state[date.year()] } || {};
-      const selectedMonthReminders = { ...selectedYearReminders[date.month()] } || {};
-      const selectedDayReminders = selectedMonthReminders[date.date()] || [];
+      const selectedYearReminders = { ...state[action.payload.date.year()] } || {};
+      const selectedMonthReminders = { ...selectedYearReminders[action.payload.date.month()] } || {};
+      const selectedDayReminders = selectedMonthReminders[action.payload.date.date()] || {};
 
-      selectedDayReminders.push(reminder);
+      selectedDayReminders[action.payload.time] = action.payload;
+
       return { 
         ...state, 
-        [date.year()]: {
+        [action.payload.date.year()]: {
           ...selectedYearReminders,
-          [date.month()]: {
+          [action.payload.date.month()]: {
             ...selectedMonthReminders,
-            [date.date()]: selectedDayReminders
+            [action.payload.date.date()]: selectedDayReminders
           }
         }
       };
-
+    case EDIT_REMINDER:
+      return {
+        ...state,
+        [action.payload.date.year()]: {
+          ...state[action.payload.date.year()],
+          [action.payload.date.month()]: {
+            ...state[action.payload.date.year()][action.payload.date.month()],
+            [action.payload.date.date()]: {
+              ...state[action.payload.date.year()][action.payload.date.month()][action.payload.date.date()],
+              [action.payload.time]: action.payload
+            }
+          }
+        }
+      }
     default:
       return state;
   }

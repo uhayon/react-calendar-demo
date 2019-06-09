@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { today } from '../../utils/calendar';
 import Modal from '../Modal';
-import RemindersList from '../RemindersList';
+import DayRemindersModal from '../DayRemindersModal';
 
 import styles from './CalendarBody.module.scss';
 
@@ -23,7 +23,7 @@ class CalendarDay extends React.Component {
   }
 
   render() {
-    const { date, isFromCurrentMonth, remimders } = this.props;
+    const { date, isFromCurrentMonth } = this.props;
 
     return (
       <>
@@ -33,7 +33,7 @@ class CalendarDay extends React.Component {
         {
           this.state.modalOpen && 
           <Modal onDismiss={this.closeModal} showOverlay>
-            <RemindersList date={date} reminders={remimders} />
+            <DayRemindersModal date={date} />
           </Modal>
         }
       </>

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
 const isSmallScreen = () => {
-  return window.innerWidth <= 600;
+  return window.innerWidth <= 750;
 }
 
 export default () => {
   const [windowWidthSmall, setWindowWidthSmall] = useState(isSmallScreen());
-  const onResize = () => { console.log('a'); setWindowWidthSmall(isSmallScreen())};
+  const onResize = () => { setWindowWidthSmall(isSmallScreen())};
 
   useEffect(
     () => {
