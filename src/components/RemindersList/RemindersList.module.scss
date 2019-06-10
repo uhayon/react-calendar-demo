@@ -1,11 +1,11 @@
 .remindersList {
-    overflow-y: scroll;
+    overflow-y: auto;
     .reminderItem {
         color: #fff;
         padding: 1em;
         margin: 1em;
         cursor: pointer;
-        overflow: scroll;
+        overflow: auto;
         p {
             margin: 0;
             white-space: nowrap;
