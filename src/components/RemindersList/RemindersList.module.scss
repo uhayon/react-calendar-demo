@@ -6,6 +6,19 @@
         margin: 1em;
         cursor: pointer;
         overflow: auto;
+        display: flex;
+        flex-direction: column;
+        .deleteReminder {
+            color: #fff;
+            border: 2px solid #c0392b;
+            background-color: #e74c3c;
+            display: flex;
+            align-items: center;
+            padding: 0.5em 1em;
+            align-self: flex-start;
+            margin-bottom: 1em;
+            cursor: pointer;
+        }
         p {
             margin: 0;
             white-space: nowrap;

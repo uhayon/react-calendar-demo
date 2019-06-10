@@ -2,7 +2,8 @@ import _ from 'lodash';
 import {
   ADD_REMINDER,
   EDIT_REMINDER,
-  REMOVE_REMINDER
+  REMOVE_REMINDER,
+  REMOVE_ALL_DAY_REMINDERS
 } from '../constants';
 
 const initalState = {};
@@ -41,21 +42,33 @@ export default (state = initalState, action) => {
         }
       }
     case REMOVE_REMINDER:
-        const selectedYearRemindersEdit = { ...state[action.payload.date.year()] };
-        const selectedMonthRemindersEdit = { ...selectedYearRemindersEdit[action.payload.date.month()] };
-        const selectedDayRemindersEdit = { ...selectedMonthRemindersEdit[action.payload.date.date()] };
+      const selectedYearRemindersEdit = { ...state[action.payload.date.year()] };
+      const selectedMonthRemindersEdit = { ...selectedYearRemindersEdit[action.payload.date.month()] };
+      const selectedDayRemindersEdit = { ...selectedMonthRemindersEdit[action.payload.date.date()] };
 
-        return {
-          ...state,
-          [action.payload.date.year()]: {
-            ...selectedYearRemindersEdit,
-            [action.payload.date.month()]: {
-              ...selectedMonthRemindersEdit,
-              [action.payload.date.date()]: _.omit(selectedDayRemindersEdit, action.payload.time)
-            }
+      return {
+        ...state,
+        [action.payload.date.year()]: {
+          ...selectedYearRemindersEdit,
+          [action.payload.date.month()]: {
+            ...selectedMonthRemindersEdit,
+            [action.payload.date.date()]: _.omit(selectedDayRemindersEdit, action.payload.time)
           }
         }
+      }
+    case REMOVE_ALL_DAY_REMINDERS:
+      const selectedYearRemindersRemoveAll = { ...state[action.payload.year()] };
+      const selectedMonthRemindersRemoveAll = { ...selectedYearRemindersRemoveAll[action.payload.month()] };
 
+      return {
+        ...state,
+        [action.payload.year()]: {
+          ...selectedYearRemindersRemoveAll,
+          [action.payload.month()]: {
+            ..._.omit(selectedMonthRemindersRemoveAll, action.payload.date())
+          }
+        }
+      }
     default:
       return state;
   }

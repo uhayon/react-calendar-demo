@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faMapMarkerAlt, faStickyNote, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faMapMarkerAlt, faStickyNote, faChartBar, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '../Modal';
 import ReminderForm from '../ReminderForm';
+import { removeReminder } from '../../model/actions';
 
 import styles from './RemindersList.module.scss';
 
@@ -19,12 +21,21 @@ class ReminderItem extends React.Component {
     this.setState({ modalOpen: false });
   }
 
+  onDeleteReminder = () => {
+    const { removeReminder, reminder } = this.props;
+    removeReminder(reminder);
+  }
+
   render() {
     const { text, color, time, city, date, forecast } = this.props.reminder;
 
     return (
       <>
         <div className={styles.reminderItem} style={{backgroundColor: color}} onClick={this.onShowReminderForm}>
+          <button className={styles.deleteReminder} onClick={this.onDeleteReminder}>
+            <FontAwesomeIcon icon={faTrashAlt} />
+            Delete
+          </button>
           <p>
             <FontAwesomeIcon icon={faClock} />
             <span>{time}</span>
@@ -53,4 +64,7 @@ class ReminderItem extends React.Component {
   }
 };
 
-export default ReminderItem;
+const mapStateToProps = null;
+const mapDispatchToProps = { removeReminder };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReminderItem);

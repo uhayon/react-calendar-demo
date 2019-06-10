@@ -4,6 +4,7 @@ import Modal from '../Modal';
 import ReminderForm from '../ReminderForm';
 import RemindersList from '../RemindersList';
 import { sortReminders } from '../../utils/reminders';
+import { removeAllDayReminders } from '../../model/actions';
 
 import styles from './DayRemindersModal.module.scss';
 
@@ -22,6 +23,11 @@ class DayRemindersModal extends React.Component {
     this.setState({ visible: true })
   }
 
+  onDeleteAllReminders = () => {
+    const { removeAllDayReminders, date } = this.props;
+    removeAllDayReminders(date);
+  }
+
   render() {
     const { reminders } = this.props;
 
@@ -35,7 +41,10 @@ class DayRemindersModal extends React.Component {
 
     return (
       <div className={styles.dayRemindersModal}>
-        <h3>{this.renderTitle()}</h3>
+        <div className={styles.dayRemindersModalTitle}>
+          <h3>{this.renderTitle()}</h3>
+          <button className={styles.deleteAll} onClick={this.onDeleteAllReminders}>Delete all reminders</button>
+        </div>
         <div>
           <RemindersList reminders={reminders} />
         </div>
@@ -57,6 +66,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = { removeAllDayReminders };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DayRemindersModal);
